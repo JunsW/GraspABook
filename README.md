@@ -26,3 +26,4 @@ This python script is designed for grasp text from specific website.
 地址标题提取<br>
 存入文件<br>
 在每一章节的开头加入了`###`来占位 配合一些软件 比如 calibre 可以制作带目录的mobi等<br>
+欢迎大神改进
