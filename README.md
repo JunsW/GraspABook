@@ -20,4 +20,4 @@ This python script is designed for grasp text from specific website.
 在每一章节的开头加入了`###`来占位 配合一些软件 比如 calibre 可以制作带目录的mobi等<br>
 
 
-```如有问题请联系邮箱: wjunshuo@qq.com```
+>如有问题请联系邮箱: wjunshuo@qq.com
