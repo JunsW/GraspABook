@@ -1,5 +1,6 @@
 # GraspABook
 This python script is designed for grasp text from specific website. 
+>Let me know if you got any question.如有问题请联系邮箱: wjunshuo@qq.com
 
 ## 如何运行
 **注意: 需要修改全局变量 `fileDirPath` 规定的路径才可以运行**  
@@ -18,6 +19,3 @@ This python script is designed for grasp text from specific website.
 地址标题提取<br>
 存入文件<br>
 在每一章节的开头加入了`###`来占位 配合一些软件 比如 calibre 可以制作带目录的mobi等<br>
-
-
->如有问题请联系邮箱: wjunshuo@qq.com
