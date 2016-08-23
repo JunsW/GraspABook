@@ -9,6 +9,13 @@ This python script is designed for grasp text from specific website.
 打开 terminal 然后使用命令 <br> `python3 (拖拽文件到窗口 然后回车键)`<br>
 根据提示输入需要的信息
 
+###示例
+比如这本书 从第一章节抓取这部小说 `http://www.biquge.la/book/401/302287.html`
+请输入书序号: 401
+请输入需要抓取书的起始章节: 1
+需要重命名新书吗?(n/y)y
+请输入书名: frxxz
+
 ## 原理简述
 
 调用`userInteraction()` 部分获取输入的内容
