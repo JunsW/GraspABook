@@ -7,31 +7,46 @@ import os
 from bs4 import BeautifulSoup
 from retrying import retry
 #import HTMLParser
-bookNumber = '401'
 filePathDir = os.getcwd() + '/Documents/Python/learning/contentBQG/contents/'
 
 class fictionSpider:
 
-    def __init__(self,startFlag=1):
-        global bookNumber
-        self.url = 'http://m.biquge.la/booklist/'+bookNumber+'.html'
-
+    def __init__(self):
+        self.bookName = 'ANewBook'
+        self.bookNumber = '401'
+        self.startFlag = int(1)
+        self.url = 'http://m.biquge.la/booklist/'+self.bookNumber+'.html'
         self.host = 'http://m.biquge.la'
-        self.startFlag = startFlag
+        self.userInteraction()
+        self.contentName = 'content'
     
+    def userInteraction(self):
+        self.bookNumber = input("\n请输入书序号: ")
+        self.startFlag = int(input("请输入需要抓取书的起始章节: "))
+        bookName = self.ifNeedRename()
+        if (bookName!=''):
+            self.bookName = bookName
+
+    def ifNeedRename(self):
+        flag = input("需要重命名新书吗?(n\y)")
+        if (flag == 'y' or flag == 'Y'):
+            bookName = input("请输入书名: ")
+            return bookName
+        elif (flag == 'n' or flag == 'N'):
+            return ''
+        else:
+            print("无法识别的指令")
+            self.ifNeedRename()
+
+
+
     def fetchPages(self):
         f = urllib.request.urlopen(url=self.url,timeout=120)
         return f.read()
 
-#    def getPage(self,pageIndex):
-#        url = self.siteURL + "?page=" + str(pageIndex)
-#        request = urllib2.Request(url)
-#        response = urllib2.urlopen(request)
-#        return response.read().decode('gbk')
-
     def saveBrief(self,content,name):
         global filePathDir
-        filePath = filePathDir+ name +".txt"
+        filePath = filePathDir+ self.contentName +".txt"
         f = open(filePath,"wb+")
         print("正在保存目录信息")
         print('='*40)
@@ -39,20 +54,20 @@ class fictionSpider:
         f.close()
     
     def getFetchedContent(self):
-        filePath = os.getcwd()+'/Documents/Python/learning/contentBQG/contents/'+"content.txt"
+        global filePathDir
+        filePath = filePathDir+ self.contentName +".txt"
         f = open(filePath,"rb+")
         content = f.read()
         return content
 
-    def extractEpisodeInfo(self,strToSearch,fileName):
-        global bookNumber
+    def extractEpisodeInfo(self,strToSearch):
         print("正在提取内容")
         print('='*40)
         hrefs = []
         rowTitles = []
         titles = []
         episodes = []
-        phref = re.compile('\/book\/'+bookNumber+'/[0-9]*\.html')
+        phref = re.compile('\/book\/'+self.bookNumber+'/[0-9]*\.html')
 #        pTitle = re.compile('第.+章.*<\/a')
         pTitle = re.compile('>.*<\/a')
         pEpisodes = re.compile('href.*book.*a>')
@@ -72,7 +87,7 @@ class fictionSpider:
 
         print('hrefs Fetched!')
         print('Titiles Fetched')
-        self.fetchEpisodeContent(hrefs=hrefs,titles=titles,startFlag=self.startFlag,fileName=fileName)
+        self.fetchEpisodeContent(hrefs=hrefs,titles=titles,startFlag=self.startFlag,fileName=self.bookName)
 
     def fetchEpisodeContent(self,hrefs,titles,startFlag,fileName):
         index = 0
@@ -129,12 +144,12 @@ class fictionSpider:
         content=content[0].text.encode('utf-8')
         return content[10:]
 
-spider = fictionSpider(startFlag=1)##1199
+spider = fictionSpider()##1199
 resultA=spider.fetchPages()
 ##print(resultA)
 spider.saveBrief(content=resultA,name='content')
 str = spider.getFetchedContent()
-spider.extractEpisodeInfo(str.decode('gbk'),fileName='frxxz')
+spider.extractEpisodeInfo(str.decode('gbk'))
 ##spider.extractEpisodeInfo(str)
 #
 #
